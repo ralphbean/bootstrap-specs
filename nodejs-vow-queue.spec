@@ -41,25 +41,11 @@ vow-queue is a module for task queue with weights and priorities
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep vow ~0.4.x
-
+%nodejs_fixdep --caret
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev jscs ~1.0.x
-%nodejs_fixdep --dev jshint ~2.1.x
-%nodejs_fixdep --dev istanbul ~0.1.x
-%nodejs_fixdep --dev mocha-istanbul ~*
-%nodejs_fixdep --dev chai ~*
-%nodejs_fixdep --dev mocha ~1.11.x
-%else
-%nodejs_fixdep --dev -r jscs ~1.0.x
-%nodejs_fixdep --dev -r jshint ~2.1.x
-%nodejs_fixdep --dev -r istanbul ~0.1.x
-%nodejs_fixdep --dev -r mocha-istanbul ~*
-%nodejs_fixdep --dev -r chai ~*
-%nodejs_fixdep --dev -r mocha ~1.11.x
+%nodejs_fixdep --caret --dev
 %endif
-
 
 %build
 %nodejs_symlink_deps --build

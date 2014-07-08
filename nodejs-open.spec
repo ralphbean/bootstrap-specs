@@ -33,14 +33,11 @@ Open a file or url in the user's preferred application.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-
+%nodejs_fixdep --caret
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev mocha ~*
-%else
-%nodejs_fixdep --dev -r mocha ~*
+%nodejs_fixdep --caret --dev
 %endif
-
 
 %build
 %nodejs_symlink_deps --build

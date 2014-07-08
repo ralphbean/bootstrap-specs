@@ -49,15 +49,14 @@ Start a connect web server.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep portscanner
+%nodejs_fixdep --caret
+%nodejs_fixdep portscanner ~*
 %nodejs_fixdep connect ~2.x
 %nodejs_fixdep async ~0.x
-%nodejs_fixdep open ~0.0.x
-%nodejs_fixdep grunt ~0.4.x
-%nodejs_fixdep connect-livereload ~0.4.x
 
-
-
+%if 0%{?enable_tests}
+%nodejs_fixdep --caret --dev
+%endif
 
 %build
 %nodejs_symlink_deps --build

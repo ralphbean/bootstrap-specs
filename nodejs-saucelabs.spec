@@ -37,20 +37,11 @@ node-saucelabs
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-
+%nodejs_fixdep --caret
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev mocha ~1.9.x
-%nodejs_fixdep --dev chai ~1.5.x
-%nodejs_fixdep --dev jshint ~*
-%nodejs_fixdep --dev nock ~0.17.x
-%else
-%nodejs_fixdep --dev -r mocha ~1.9.x
-%nodejs_fixdep --dev -r chai ~1.5.x
-%nodejs_fixdep --dev -r jshint ~*
-%nodejs_fixdep --dev -r nock ~0.17.x
+%nodejs_fixdep --caret --dev
 %endif
-
 
 %build
 %nodejs_symlink_deps --build

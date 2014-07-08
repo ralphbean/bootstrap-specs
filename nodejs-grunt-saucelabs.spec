@@ -56,27 +56,13 @@ using Sauce Labs' Cloudified Browsers.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep saucelabs ~0.1.x
-%nodejs_fixdep q
-%nodejs_fixdep colors ~0.6.x
-%nodejs_fixdep lodash ~2.4.x
-%nodejs_fixdep sauce-tunnel ~2.0.x
-%nodejs_fixdep grunt ~0.4.x
+%nodejs_fixdep --caret
 %nodejs_fixdep request ~2.x
-
+%nodejs_fixdep q
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev grunt-sauce-tunnel ~^0.2.x
-%nodejs_fixdep --dev grunt-jscs-checker ~^0.4.x
-%nodejs_fixdep --dev merge ~^1.1.x
-%nodejs_fixdep --dev load-grunt-config ~^0.9.x
-%else
-%nodejs_fixdep --dev -r grunt-sauce-tunnel ~^0.2.x
-%nodejs_fixdep --dev -r grunt-jscs-checker ~^0.4.x
-%nodejs_fixdep --dev -r merge ~^1.1.x
-%nodejs_fixdep --dev -r load-grunt-config ~^0.9.x
+%nodejs_fixdep --caret --dev
 %endif
-
 
 %build
 %nodejs_symlink_deps --build

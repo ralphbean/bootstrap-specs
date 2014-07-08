@@ -34,10 +34,7 @@ by lodash-cli.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep lodash.noop ~2.4.x
-%nodejs_fixdep lodash._isnative ~2.4.x
-
-
+%nodejs_fixdep --caret
 
 
 

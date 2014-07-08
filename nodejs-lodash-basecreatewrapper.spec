@@ -39,12 +39,7 @@ cli](https://npmjs.org/package/lodash-cli).
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep lodash.isobject ~2.4.x
-%nodejs_fixdep lodash._basecreate ~2.4.x
-%nodejs_fixdep lodash._setbinddata ~2.4.x
-%nodejs_fixdep lodash._slice ~2.4.x
-
-
+%nodejs_fixdep --caret
 
 
 

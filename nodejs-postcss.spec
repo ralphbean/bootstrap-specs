@@ -43,26 +43,12 @@ with full source map support.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
+%nodejs_fixdep --caret
 %nodejs_fixdep source-map ~0.1.x
-%nodejs_fixdep base64-js ~0.0.x
-
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev cssom ~0.3.x
-%nodejs_fixdep --dev fs-extra ~0.9.x
-%nodejs_fixdep --dev gonzales ~1.0.x
-%nodejs_fixdep --dev rework ~1.0.x
-%nodejs_fixdep --dev should ~4.0.x
-%nodejs_fixdep --dev mocha ~1.20.x
-%else
-%nodejs_fixdep --dev -r cssom ~0.3.x
-%nodejs_fixdep --dev -r fs-extra ~0.9.x
-%nodejs_fixdep --dev -r gonzales ~1.0.x
-%nodejs_fixdep --dev -r rework ~1.0.x
-%nodejs_fixdep --dev -r should ~4.0.x
-%nodejs_fixdep --dev -r mocha ~1.20.x
+%nodejs_fixdep --caret --dev
 %endif
-
 
 %build
 %nodejs_symlink_deps --build

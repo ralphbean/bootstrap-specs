@@ -40,22 +40,11 @@ The grunt plugin for sorting CSS properties in specific order.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep csscomb ~3.0.x
-%nodejs_fixdep grunt ~^0.4.x
-
+%nodejs_fixdep --caret
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev grunt-contrib-clean ~^0.4.x
-%nodejs_fixdep --dev grunt ~^0.4.x
-%nodejs_fixdep --dev grunt-contrib-nodeunit ~^0.4.x
-%nodejs_fixdep --dev grunt-contrib-jshint ~^0.10.x
-%else
-%nodejs_fixdep --dev -r grunt-contrib-clean ~^0.4.x
-%nodejs_fixdep --dev -r grunt ~^0.4.x
-%nodejs_fixdep --dev -r grunt-contrib-nodeunit ~^0.4.x
-%nodejs_fixdep --dev -r grunt-contrib-jshint ~^0.10.x
+%nodejs_fixdep --caret --dev
 %endif
-
 
 %build
 %nodejs_symlink_deps --build

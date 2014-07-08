@@ -39,10 +39,11 @@ Copy files and folders.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep grunt ~0.4.x
+%nodejs_fixdep --caret
 
-
-
+%if 0%{?enable_tests}
+%nodejs_fixdep --caret --dev
+%endif
 
 %build
 %nodejs_symlink_deps --build

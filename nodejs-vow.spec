@@ -42,30 +42,11 @@ A Promises/A+ implementation.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-
+%nodejs_fixdep --caret
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev uglify-js ~1.3.x
-%nodejs_fixdep --dev jspath ~0.2.x
-%nodejs_fixdep --dev istanbul ~
-%nodejs_fixdep --dev promises-aplus-tests ~2.0.x
-%nodejs_fixdep --dev marked ~0.2.x
-%nodejs_fixdep --dev highlight.js ~7.5.x
-%nodejs_fixdep --dev nodeunit ~
-%nodejs_fixdep --dev bem-jsd ~1.3.x
-%nodejs_fixdep --dev yate ~0.0.x
-%else
-%nodejs_fixdep --dev -r uglify-js ~1.3.x
-%nodejs_fixdep --dev -r jspath ~0.2.x
-%nodejs_fixdep --dev -r istanbul ~
-%nodejs_fixdep --dev -r promises-aplus-tests ~2.0.x
-%nodejs_fixdep --dev -r marked ~0.2.x
-%nodejs_fixdep --dev -r highlight.js ~7.5.x
-%nodejs_fixdep --dev -r nodeunit ~
-%nodejs_fixdep --dev -r bem-jsd ~1.3.x
-%nodejs_fixdep --dev -r yate ~0.0.x
+%nodejs_fixdep --caret --dev
 %endif
-
 
 %build
 %nodejs_symlink_deps --build

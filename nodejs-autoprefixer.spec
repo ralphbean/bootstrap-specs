@@ -44,25 +44,12 @@ website
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
+%nodejs_fixdep --caret
 %nodejs_fixdep fs-extra ~0.x
-%nodejs_fixdep caniuse-db ~^1.0.x
-%nodejs_fixdep postcss ~1.0.x
-
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev stylus ~0.46.x
-%nodejs_fixdep --dev nib ~1.0.x
-%nodejs_fixdep --dev should ~4.0.x
-%nodejs_fixdep --dev browserify ~4.2.x
-%nodejs_fixdep --dev mocha ~1.20.x
-%else
-%nodejs_fixdep --dev -r stylus ~0.46.x
-%nodejs_fixdep --dev -r nib ~1.0.x
-%nodejs_fixdep --dev -r should ~4.0.x
-%nodejs_fixdep --dev -r browserify ~4.2.x
-%nodejs_fixdep --dev -r mocha ~1.20.x
+%nodejs_fixdep --caret --dev
 %endif
-
 
 %build
 %nodejs_symlink_deps --build

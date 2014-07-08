@@ -47,25 +47,11 @@ configuration to make your style sheets beautiful and consistent.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep gonzales-pe ~3.0.x
-%nodejs_fixdep minimatch ~0.2.x
-%nodejs_fixdep vow ~0.4.x
-%nodejs_fixdep vow-fs ~0.3.x
-%nodejs_fixdep commander ~2.x
-
+%nodejs_fixdep --caret
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev jscs ~1.4.x
-%nodejs_fixdep --dev jshint ~2.3.x
-%nodejs_fixdep --dev jshint-groups ~0.5.x
-%nodejs_fixdep --dev mocha ~1.14.x
-%else
-%nodejs_fixdep --dev -r jscs ~1.4.x
-%nodejs_fixdep --dev -r jshint ~2.3.x
-%nodejs_fixdep --dev -r jshint-groups ~0.5.x
-%nodejs_fixdep --dev -r mocha ~1.14.x
+%nodejs_fixdep --caret --dev
 %endif
-
 
 %build
 %nodejs_symlink_deps --build

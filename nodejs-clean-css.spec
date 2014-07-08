@@ -40,23 +40,11 @@ minifying CSS files.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep commander ~2.2.x
-
+%nodejs_fixdep --caret
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev browserify ~4.x
-%nodejs_fixdep --dev nock ~0.28.x
-%nodejs_fixdep --dev jshint ~2.5.x
-%nodejs_fixdep --dev uglify-js ~2.4.x
-%nodejs_fixdep --dev vows ~0.7.x
-%else
-%nodejs_fixdep --dev -r browserify ~4.x
-%nodejs_fixdep --dev -r nock ~0.28.x
-%nodejs_fixdep --dev -r jshint ~2.5.x
-%nodejs_fixdep --dev -r uglify-js ~2.4.x
-%nodejs_fixdep --dev -r vows ~0.7.x
+%nodejs_fixdep --caret --dev
 %endif
-
 
 %build
 %nodejs_symlink_deps --build

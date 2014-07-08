@@ -2,7 +2,7 @@
 %{?nodejs_find_provides_and_requires}
 
 %global enable_tests 0
-%global prerelease 8
+%global prerelease 9
 %global barename gonzales-pe
 
 Name:               nodejs-gonzales-pe
@@ -37,9 +37,11 @@ Gonzales PE is a rework with support of preprocessors.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
+%nodejs_fixdep --caret
 
-
-
+%if 0%{?enable_tests}
+%nodejs_fixdep --caret --dev
+%endif
 
 %build
 %nodejs_symlink_deps --build
@@ -64,5 +66,5 @@ cp -pr package.json lib \
 %{nodejs_sitelib}/gonzales-pe/
 
 %changelog
-* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 3.0.0-0.1.8
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 3.0.0-0.1.9
 - Initial packaging for Fedora.

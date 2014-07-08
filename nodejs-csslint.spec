@@ -32,6 +32,10 @@ project in the wiki: https://github.com/stubbornella/csslint/wiki
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
+%nodejs_fixdep --caret
+
+
+
 %build
 %nodejs_symlink_deps --build
 

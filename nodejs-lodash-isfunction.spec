@@ -30,8 +30,7 @@ lodash-cli.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-
-
+%nodejs_fixdep --caret
 
 
 

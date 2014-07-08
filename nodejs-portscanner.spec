@@ -31,8 +31,8 @@ The portscanner module is an asynchronous JavaScript port scanner for Node.js.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
+%nodejs_fixdep --caret
 %nodejs_fixdep async ~0.x
-
 
 %build
 %nodejs_symlink_deps --build

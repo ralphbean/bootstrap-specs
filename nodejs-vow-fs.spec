@@ -43,20 +43,12 @@ BuildRequires:      npm(istanbul)
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep node-uuid ~1.4.x
-%nodejs_fixdep glob ~3.2.x
-%nodejs_fixdep vow ~0.4.x
-%nodejs_fixdep vow-queue ~0.3.x
-
+%nodejs_fixdep --caret
+%nodejs_fixdep glob ^3.2
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev nodeunit ~
-%nodejs_fixdep --dev istanbul ~
-%else
-%nodejs_fixdep --dev -r nodeunit ~
-%nodejs_fixdep --dev -r istanbul ~
+%nodejs_fixdep --caret --dev
 %endif
-
 
 %build
 %nodejs_symlink_deps --build

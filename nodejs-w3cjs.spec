@@ -34,11 +34,8 @@ validator.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep argparse ~>= 0.1.x
-%nodejs_fixdep superagent ~>= 0.6.x
-
-
-
+%nodejs_fixdep argparse ~0.x
+%nodejs_fixdep superagent ~0.x
 
 
 %build

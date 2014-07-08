@@ -56,18 +56,14 @@ JSCS — JavaScript Code Style.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep minimatch ~0.x
-%nodejs_fixdep vow-fs ~0.3.x
+%nodejs_fixdep --caret
 %nodejs_fixdep glob
-%nodejs_fixdep strip-json-comments ~0.1.x
-%nodejs_fixdep xmlbuilder ~2.2.x
-%nodejs_fixdep commander ~2.2.x
-%nodejs_fixdep colors ~0.6.x
-%nodejs_fixdep vow ~0.4.x
-%nodejs_fixdep esprima ~1.x
+%nodejs_fixdep minimatch ^0.2
+%nodejs_fixdep esprima ^1.1
 
-
-
+%if 0%{?enable_tests}
+%nodejs_fixdep --caret --dev
+%endif
 
 %build
 %nodejs_symlink_deps --build

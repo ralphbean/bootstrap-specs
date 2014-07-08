@@ -28,9 +28,8 @@ don't need this middleware.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep --dev -r express
-%nodejs_fixdep --dev -r supertest
-%nodejs_fixdep --dev -r mocha
+%nodejs_fixdep --caret
+
 
 
 %build
