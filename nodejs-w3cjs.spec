@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 
 
 %global barename w3cjs
@@ -14,11 +17,11 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-argparse
-BuildRequires:      nodejs-superagent
+BuildRequires:      npm(argparse)
+BuildRequires:      npm(superagent)
 
-Requires:           nodejs-argparse
-Requires:           nodejs-superagent
+Requires:           npm(argparse)
+Requires:           npm(superagent)
 
 
 %description
@@ -31,8 +34,9 @@ validator.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep argparse
-%nodejs_fixdep superagent
+%nodejs_fixdep argparse ~>= 0.1.x
+%nodejs_fixdep superagent ~>= 0.6.x
+
 
 
 
@@ -54,5 +58,5 @@ cp -pr package.json lib \
 %{nodejs_sitelib}/w3cjs/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.1.9-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.1.9-1
 - Initial packaging for Fedora.

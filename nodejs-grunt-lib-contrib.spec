@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename grunt-lib-contrib
@@ -14,16 +17,16 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-maxmin
-BuildRequires:      nodejs-strip-path
+BuildRequires:      npm(maxmin)
+BuildRequires:      npm(strip-path)
 
-Requires:           nodejs-maxmin
-Requires:           nodejs-strip-path
+Requires:           npm(maxmin)
+Requires:           npm(strip-path)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-grunt-contrib-nodeunit
-BuildRequires:      nodejs-grunt-contrib-jshint
-BuildRequires:      nodejs-grunt
+BuildRequires:      npm(grunt-contrib-nodeunit)
+BuildRequires:      npm(grunt-contrib-jshint)
+BuildRequires:      npm(grunt)
 %endif
 
 
@@ -36,18 +39,10 @@ Common functionality shared across grunt-contrib tasks.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep maxmin
-%nodejs_fixdep strip-path
+%nodejs_fixdep maxmin ~0.1.x
+%nodejs_fixdep strip-path ~0.1.x
 
-%if 0%{?enable_tests}
-%nodejs_fixdep --dev grunt-contrib-nodeunit
-%nodejs_fixdep --dev grunt-contrib-jshint
-%nodejs_fixdep --dev grunt
-%else
-%nodejs_fixdep --dev -r grunt-contrib-nodeunit
-%nodejs_fixdep --dev -r grunt-contrib-jshint
-%nodejs_fixdep --dev -r grunt
-%endif
+
 
 
 %build
@@ -73,5 +68,5 @@ grunt test
 %{nodejs_sitelib}/grunt-lib-contrib/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.7.1-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.7.1-1
 - Initial packaging for Fedora.

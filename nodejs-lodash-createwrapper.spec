@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 
 
 %global barename lodash._createwrapper
@@ -14,15 +17,15 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-lodash-slice
-BuildRequires:      nodejs-lodash-isfunction
-BuildRequires:      nodejs-lodash-basebind
-BuildRequires:      nodejs-lodash-basecreatewrapper
+BuildRequires:      npm(lodash._slice)
+BuildRequires:      npm(lodash.isfunction)
+BuildRequires:      npm(lodash._basebind)
+BuildRequires:      npm(lodash._basecreatewrapper)
 
-Requires:           nodejs-lodash-slice
-Requires:           nodejs-lodash-isfunction
-Requires:           nodejs-lodash-basebind
-Requires:           nodejs-lodash-basecreatewrapper
+Requires:           npm(lodash._slice)
+Requires:           npm(lodash.isfunction)
+Requires:           npm(lodash._basebind)
+Requires:           npm(lodash._basecreatewrapper)
 
 
 %description
@@ -36,10 +39,11 @@ cli](https://npmjs.org/package/lodash-cli).
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep lodash._slice
-%nodejs_fixdep lodash.isfunction
-%nodejs_fixdep lodash._basebind
-%nodejs_fixdep lodash._basecreatewrapper
+%nodejs_fixdep lodash._slice ~2.4.x
+%nodejs_fixdep lodash.isfunction ~2.4.x
+%nodejs_fixdep lodash._basebind ~2.4.x
+%nodejs_fixdep lodash._basecreatewrapper ~2.4.x
+
 
 
 
@@ -61,5 +65,5 @@ cp -pr package.json index.js \
 %{nodejs_sitelib}/lodash._createwrapper/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 2.4.1-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 2.4.1-1
 - Initial packaging for Fedora.

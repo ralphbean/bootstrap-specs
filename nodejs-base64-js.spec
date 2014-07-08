@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename base64-js
@@ -17,7 +20,7 @@ BuildRequires:      nodejs-packaging >= 6
 
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-tape
+BuildRequires:      npm(tape)
 %endif
 
 
@@ -32,11 +35,7 @@ base64-js
 rm -rf node_modules/
 
 
-%if 0%{?enable_tests}
-%nodejs_fixdep --dev tape
-%else
-%nodejs_fixdep --dev -r tape
-%endif
+
 
 
 %build
@@ -62,5 +61,5 @@ tape test/*.js
 %{nodejs_sitelib}/base64-js/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.0.7-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.0.7-1
 - Initial packaging for Fedora.

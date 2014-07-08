@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 
 
 %global barename lodash.isfunction
@@ -31,6 +34,7 @@ rm -rf node_modules/
 
 
 
+
 %build
 %nodejs_symlink_deps --build
 
@@ -48,5 +52,5 @@ cp -pr package.json index.js \
 %{nodejs_sitelib}/lodash.isfunction/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 2.4.1-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 2.4.1-1
 - Initial packaging for Fedora.

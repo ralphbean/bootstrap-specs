@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename grunt-jscs-checker
@@ -14,25 +17,25 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-lodash-assign
-BuildRequires:      nodejs-hooker
-BuildRequires:      nodejs-jscs
-BuildRequires:      nodejs-vow
-BuildRequires:      nodejs-grunt
+BuildRequires:      npm(lodash.assign)
+BuildRequires:      npm(hooker)
+BuildRequires:      npm(jscs)
+BuildRequires:      npm(vow)
+BuildRequires:      npm(grunt)
 
-Requires:           nodejs-lodash-assign
-Requires:           nodejs-hooker
-Requires:           nodejs-jscs
-Requires:           nodejs-vow
-Requires:           nodejs-grunt
+Requires:           npm(lodash.assign)
+Requires:           npm(hooker)
+Requires:           npm(jscs)
+Requires:           npm(vow)
+Requires:           npm(grunt)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-time-grunt
-BuildRequires:      nodejs-load-grunt-tasks
-BuildRequires:      nodejs-grunt-contrib-nodeunit
-BuildRequires:      nodejs-grunt-contrib-jshint
-BuildRequires:      nodejs-grunt-cli
-BuildRequires:      nodejs-grunt-bump
+BuildRequires:      npm(time-grunt)
+BuildRequires:      npm(load-grunt-tasks)
+BuildRequires:      npm(grunt-contrib-nodeunit)
+BuildRequires:      npm(grunt-contrib-jshint)
+BuildRequires:      npm(grunt-cli)
+BuildRequires:      npm(grunt-bump)
 %endif
 
 
@@ -45,27 +48,13 @@ Task for checking JavaScript Code Style with jscs.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep lodash.assign
-%nodejs_fixdep hooker
-%nodejs_fixdep jscs
-%nodejs_fixdep vow
-%nodejs_fixdep grunt
+%nodejs_fixdep lodash.assign ~2.4.x
+%nodejs_fixdep hooker ~0.2.x
+%nodejs_fixdep jscs ~1.5.x
+%nodejs_fixdep vow ~0.4.x
+%nodejs_fixdep grunt ~0.4.x
 
-%if 0%{?enable_tests}
-%nodejs_fixdep --dev time-grunt
-%nodejs_fixdep --dev load-grunt-tasks
-%nodejs_fixdep --dev grunt-contrib-nodeunit
-%nodejs_fixdep --dev grunt-contrib-jshint
-%nodejs_fixdep --dev grunt-cli
-%nodejs_fixdep --dev grunt-bump
-%else
-%nodejs_fixdep --dev -r time-grunt
-%nodejs_fixdep --dev -r load-grunt-tasks
-%nodejs_fixdep --dev -r grunt-contrib-nodeunit
-%nodejs_fixdep --dev -r grunt-contrib-jshint
-%nodejs_fixdep --dev -r grunt-cli
-%nodejs_fixdep --dev -r grunt-bump
-%endif
+
 
 
 %build
@@ -91,5 +80,5 @@ grunt test
 %{nodejs_sitelib}/grunt-jscs-checker/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.6.1-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.6.1-1
 - Initial packaging for Fedora.

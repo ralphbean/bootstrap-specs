@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 
 
 %global barename lodash.keys
@@ -14,13 +17,13 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-lodash-isobject
-BuildRequires:      nodejs-lodash-isnative
-BuildRequires:      nodejs-lodash-shimkeys
+BuildRequires:      npm(lodash.isobject)
+BuildRequires:      npm(lodash._isnative)
+BuildRequires:      npm(lodash._shimkeys)
 
-Requires:           nodejs-lodash-isobject
-Requires:           nodejs-lodash-isnative
-Requires:           nodejs-lodash-shimkeys
+Requires:           npm(lodash.isobject)
+Requires:           npm(lodash._isnative)
+Requires:           npm(lodash._shimkeys)
 
 
 %description
@@ -32,9 +35,10 @@ The Lo-Dash function `_.keys` as a Node.js module
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep lodash.isobject
-%nodejs_fixdep lodash._isnative
-%nodejs_fixdep lodash._shimkeys
+%nodejs_fixdep lodash.isobject ~2.4.x
+%nodejs_fixdep lodash._isnative ~2.4.x
+%nodejs_fixdep lodash._shimkeys ~2.4.x
+
 
 
 
@@ -56,5 +60,5 @@ cp -pr package.json index.js \
 %{nodejs_sitelib}/lodash.keys/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 2.4.1-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 2.4.1-1
 - Initial packaging for Fedora.

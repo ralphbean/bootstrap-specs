@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename vow-queue
@@ -14,18 +17,18 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-vow
+BuildRequires:      npm(vow)
 
-Requires:           nodejs-vow
+Requires:           npm(vow)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-jscs
-BuildRequires:      nodejs-vow
-BuildRequires:      nodejs-jshint
-BuildRequires:      nodejs-istanbul
-BuildRequires:      nodejs-mocha-istanbul
-BuildRequires:      nodejs-chai
-BuildRequires:      nodejs-mocha
+BuildRequires:      npm(jscs)
+BuildRequires:      npm(vow)
+BuildRequires:      npm(jshint)
+BuildRequires:      npm(istanbul)
+BuildRequires:      npm(mocha-istanbul)
+BuildRequires:      npm(chai)
+BuildRequires:      npm(mocha)
 %endif
 
 
@@ -38,24 +41,23 @@ vow-queue is a module for task queue with weights and priorities
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep vow
+%nodejs_fixdep vow ~0.4.x
+
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev jscs
-%nodejs_fixdep --dev vow
-%nodejs_fixdep --dev jshint
-%nodejs_fixdep --dev istanbul
-%nodejs_fixdep --dev mocha-istanbul
-%nodejs_fixdep --dev chai
-%nodejs_fixdep --dev mocha
+%nodejs_fixdep --dev jscs ~1.0.x
+%nodejs_fixdep --dev jshint ~2.1.x
+%nodejs_fixdep --dev istanbul ~0.1.x
+%nodejs_fixdep --dev mocha-istanbul ~*
+%nodejs_fixdep --dev chai ~*
+%nodejs_fixdep --dev mocha ~1.11.x
 %else
-%nodejs_fixdep --dev -r jscs
-%nodejs_fixdep --dev -r vow
-%nodejs_fixdep --dev -r jshint
-%nodejs_fixdep --dev -r istanbul
-%nodejs_fixdep --dev -r mocha-istanbul
-%nodejs_fixdep --dev -r chai
-%nodejs_fixdep --dev -r mocha
+%nodejs_fixdep --dev -r jscs ~1.0.x
+%nodejs_fixdep --dev -r jshint ~2.1.x
+%nodejs_fixdep --dev -r istanbul ~0.1.x
+%nodejs_fixdep --dev -r mocha-istanbul ~*
+%nodejs_fixdep --dev -r chai ~*
+%nodejs_fixdep --dev -r mocha ~1.11.x
 %endif
 
 
@@ -82,5 +84,5 @@ make validate
 %{nodejs_sitelib}/vow-queue/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.3.1-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.3.1-1
 - Initial packaging for Fedora.

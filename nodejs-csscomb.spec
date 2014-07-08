@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 %global prerelease 5
 %global barename csscomb
@@ -14,23 +17,23 @@ Source0:            http://registry.npmjs.org/csscomb/-/csscomb-3.0.0-%{prerelea
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-gonzales-pe
-BuildRequires:      nodejs-minimatch
-BuildRequires:      nodejs-vow
-BuildRequires:      nodejs-vow-fs
-BuildRequires:      nodejs-commander
+BuildRequires:      npm(gonzales-pe)
+BuildRequires:      npm(minimatch)
+BuildRequires:      npm(vow)
+BuildRequires:      npm(vow-fs)
+BuildRequires:      npm(commander)
 
-Requires:           nodejs-gonzales-pe
-Requires:           nodejs-minimatch
-Requires:           nodejs-vow
-Requires:           nodejs-vow-fs
-Requires:           nodejs-commander
+Requires:           npm(gonzales-pe)
+Requires:           npm(minimatch)
+Requires:           npm(vow)
+Requires:           npm(vow-fs)
+Requires:           npm(commander)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-jscs
-BuildRequires:      nodejs-jshint
-BuildRequires:      nodejs-jshint-groups
-BuildRequires:      nodejs-mocha
+BuildRequires:      npm(jscs)
+BuildRequires:      npm(jshint)
+BuildRequires:      npm(jshint-groups)
+BuildRequires:      npm(mocha)
 %endif
 
 
@@ -44,22 +47,23 @@ configuration to make your style sheets beautiful and consistent.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep gonzales-pe
-%nodejs_fixdep minimatch
-%nodejs_fixdep vow
-%nodejs_fixdep vow-fs
-%nodejs_fixdep commander
+%nodejs_fixdep gonzales-pe ~3.0.x
+%nodejs_fixdep minimatch ~0.2.x
+%nodejs_fixdep vow ~0.4.x
+%nodejs_fixdep vow-fs ~0.3.x
+%nodejs_fixdep commander ~2.x
+
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev jscs
-%nodejs_fixdep --dev jshint
-%nodejs_fixdep --dev jshint-groups
-%nodejs_fixdep --dev mocha
+%nodejs_fixdep --dev jscs ~1.4.x
+%nodejs_fixdep --dev jshint ~2.3.x
+%nodejs_fixdep --dev jshint-groups ~0.5.x
+%nodejs_fixdep --dev mocha ~1.14.x
 %else
-%nodejs_fixdep --dev -r jscs
-%nodejs_fixdep --dev -r jshint
-%nodejs_fixdep --dev -r jshint-groups
-%nodejs_fixdep --dev -r mocha
+%nodejs_fixdep --dev -r jscs ~1.4.x
+%nodejs_fixdep --dev -r jshint ~2.3.x
+%nodejs_fixdep --dev -r jshint-groups ~0.5.x
+%nodejs_fixdep --dev -r mocha ~1.14.x
 %endif
 
 
@@ -86,5 +90,5 @@ jshint-groups && ./node_modules/.bin/jscs . && node test/mocha
 %{nodejs_sitelib}/csscomb/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 3.0.0-0.1.5
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 3.0.0-0.1.5
 - Initial packaging for Fedora.

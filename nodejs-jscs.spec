@@ -1,9 +1,12 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename jscs
 
 Name:               nodejs-jscs
-Version:            1.5.7
+Version:            1.5.8
 Release:            1%{?dist}
 Summary:            JavaScript Code Style
 
@@ -14,33 +17,33 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-minimatch
-BuildRequires:      nodejs-vow-fs
-BuildRequires:      nodejs-glob
-BuildRequires:      nodejs-strip-json-comments
-BuildRequires:      nodejs-xmlbuilder
-BuildRequires:      nodejs-commander
-BuildRequires:      nodejs-colors
-BuildRequires:      nodejs-vow
-BuildRequires:      nodejs-esprima
+BuildRequires:      npm(minimatch)
+BuildRequires:      npm(vow-fs)
+BuildRequires:      npm(glob)
+BuildRequires:      npm(strip-json-comments)
+BuildRequires:      npm(xmlbuilder)
+BuildRequires:      npm(commander)
+BuildRequires:      npm(colors)
+BuildRequires:      npm(vow)
+BuildRequires:      npm(esprima)
 
-Requires:           nodejs-minimatch
-Requires:           nodejs-vow-fs
-Requires:           nodejs-glob
-Requires:           nodejs-strip-json-comments
-Requires:           nodejs-xmlbuilder
-Requires:           nodejs-commander
-Requires:           nodejs-colors
-Requires:           nodejs-vow
-Requires:           nodejs-esprima
+Requires:           npm(minimatch)
+Requires:           npm(vow-fs)
+Requires:           npm(glob)
+Requires:           npm(strip-json-comments)
+Requires:           npm(xmlbuilder)
+Requires:           npm(commander)
+Requires:           npm(colors)
+Requires:           npm(vow)
+Requires:           npm(esprima)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-xml2js
-BuildRequires:      nodejs-browserify
-BuildRequires:      nodejs-jshint
-BuildRequires:      nodejs-hooker
-BuildRequires:      nodejs-sinon
-BuildRequires:      nodejs-mocha
+BuildRequires:      npm(xml2js)
+BuildRequires:      npm(browserify)
+BuildRequires:      npm(jshint)
+BuildRequires:      npm(hooker)
+BuildRequires:      npm(sinon)
+BuildRequires:      npm(mocha)
 %endif
 
 
@@ -53,31 +56,17 @@ JSCS — JavaScript Code Style.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep minimatch
-%nodejs_fixdep vow-fs
+%nodejs_fixdep minimatch ~0.x
+%nodejs_fixdep vow-fs ~0.3.x
 %nodejs_fixdep glob
-%nodejs_fixdep strip-json-comments
-%nodejs_fixdep xmlbuilder
-%nodejs_fixdep commander
-%nodejs_fixdep colors
-%nodejs_fixdep vow
-%nodejs_fixdep esprima
+%nodejs_fixdep strip-json-comments ~0.1.x
+%nodejs_fixdep xmlbuilder ~2.2.x
+%nodejs_fixdep commander ~2.2.x
+%nodejs_fixdep colors ~0.6.x
+%nodejs_fixdep vow ~0.4.x
+%nodejs_fixdep esprima ~1.x
 
-%if 0%{?enable_tests}
-%nodejs_fixdep --dev xml2js
-%nodejs_fixdep --dev browserify
-%nodejs_fixdep --dev jshint
-%nodejs_fixdep --dev hooker
-%nodejs_fixdep --dev sinon
-%nodejs_fixdep --dev mocha
-%else
-%nodejs_fixdep --dev -r xml2js
-%nodejs_fixdep --dev -r browserify
-%nodejs_fixdep --dev -r jshint
-%nodejs_fixdep --dev -r hooker
-%nodejs_fixdep --dev -r sinon
-%nodejs_fixdep --dev -r mocha
-%endif
+
 
 
 %build
@@ -103,5 +92,5 @@ npm run lint && mocha
 %{nodejs_sitelib}/jscs/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 1.5.7-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 1.5.8-1
 - Initial packaging for Fedora.

@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 
 
 %global barename connect-livereload
@@ -47,5 +50,5 @@ cp -pr package.json index.js \
 %{nodejs_sitelib}/connect-livereload/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.4.0-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.4.0-1
 - Initial packaging for Fedora.

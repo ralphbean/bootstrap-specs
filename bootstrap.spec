@@ -122,7 +122,7 @@ created with an emphasis on simplicity and easy orientation.
 %nodejs_symlink_deps --build
 
 # build bootstrap css from less and minify JS
-grunt dist
+grunt dist --force
 
 %if 0%{?build_docs}
 grunt jekyll dist-docs

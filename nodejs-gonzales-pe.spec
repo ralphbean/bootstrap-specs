@@ -1,5 +1,8 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
-%global prerelease 6
+%global prerelease 8
 %global barename gonzales-pe
 
 Name:               nodejs-gonzales-pe
@@ -17,10 +20,10 @@ BuildRequires:      nodejs-packaging >= 6
 
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-coffee-script
-BuildRequires:      nodejs-benchmark
-BuildRequires:      nodejs-microtime
-BuildRequires:      nodejs-mocha
+BuildRequires:      npm(coffee-script)
+BuildRequires:      npm(benchmark)
+BuildRequires:      npm(microtime)
+BuildRequires:      npm(mocha)
 %endif
 
 
@@ -35,17 +38,7 @@ Gonzales PE is a rework with support of preprocessors.
 rm -rf node_modules/
 
 
-%if 0%{?enable_tests}
-%nodejs_fixdep --dev coffee-script
-%nodejs_fixdep --dev benchmark
-%nodejs_fixdep --dev microtime
-%nodejs_fixdep --dev mocha
-%else
-%nodejs_fixdep --dev -r coffee-script
-%nodejs_fixdep --dev -r benchmark
-%nodejs_fixdep --dev -r microtime
-%nodejs_fixdep --dev -r mocha
-%endif
+
 
 
 %build
@@ -62,7 +55,7 @@ cp -pr package.json lib \
 %check
 %if 0%{?enable_tests}
 %nodejs_symlink_deps --check
-(make && mkdir -p log && node ./test/mocha.js) | tee ./log/test.log
+(mkdir -p log && node ./test/mocha.js) | tee ./log/test.log
 %endif
 
 
@@ -71,5 +64,5 @@ cp -pr package.json lib \
 %{nodejs_sitelib}/gonzales-pe/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 3.0.0-0.1.6
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 3.0.0-0.1.8
 - Initial packaging for Fedora.

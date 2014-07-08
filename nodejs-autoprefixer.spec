@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename autoprefixer
@@ -14,20 +17,20 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-fs-extra
-BuildRequires:      nodejs-caniuse-db
-BuildRequires:      nodejs-postcss
+BuildRequires:      npm(fs-extra)
+BuildRequires:      npm(caniuse-db)
+BuildRequires:      npm(postcss)
 
-Requires:           nodejs-fs-extra
-Requires:           nodejs-caniuse-db
-Requires:           nodejs-postcss
+Requires:           npm(fs-extra)
+Requires:           npm(caniuse-db)
+Requires:           npm(postcss)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-stylus
-BuildRequires:      nodejs-nib
-BuildRequires:      nodejs-should
-BuildRequires:      nodejs-browserify
-BuildRequires:      nodejs-mocha
+BuildRequires:      npm(stylus)
+BuildRequires:      npm(nib)
+BuildRequires:      npm(should)
+BuildRequires:      npm(browserify)
+BuildRequires:      npm(mocha)
 %endif
 
 
@@ -41,22 +44,23 @@ website
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep fs-extra
-%nodejs_fixdep caniuse-db
-%nodejs_fixdep postcss
+%nodejs_fixdep fs-extra ~0.x
+%nodejs_fixdep caniuse-db ~^1.0.x
+%nodejs_fixdep postcss ~1.0.x
+
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev stylus
-%nodejs_fixdep --dev nib
-%nodejs_fixdep --dev should
-%nodejs_fixdep --dev browserify
-%nodejs_fixdep --dev mocha
+%nodejs_fixdep --dev stylus ~0.46.x
+%nodejs_fixdep --dev nib ~1.0.x
+%nodejs_fixdep --dev should ~4.0.x
+%nodejs_fixdep --dev browserify ~4.2.x
+%nodejs_fixdep --dev mocha ~1.20.x
 %else
-%nodejs_fixdep --dev -r stylus
-%nodejs_fixdep --dev -r nib
-%nodejs_fixdep --dev -r should
-%nodejs_fixdep --dev -r browserify
-%nodejs_fixdep --dev -r mocha
+%nodejs_fixdep --dev -r stylus ~0.46.x
+%nodejs_fixdep --dev -r nib ~1.0.x
+%nodejs_fixdep --dev -r should ~4.0.x
+%nodejs_fixdep --dev -r browserify ~4.2.x
+%nodejs_fixdep --dev -r mocha ~1.20.x
 %endif
 
 
@@ -83,5 +87,5 @@ mocha
 %{nodejs_sitelib}/autoprefixer/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 2.1.0-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 2.1.0-1
 - Initial packaging for Fedora.

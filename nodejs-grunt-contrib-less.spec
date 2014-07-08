@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename grunt-contrib-less
@@ -14,22 +17,22 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-chalk
-BuildRequires:      nodejs-grunt-lib-contrib
-BuildRequires:      nodejs-grunt
-BuildRequires:      nodejs-less
+BuildRequires:      npm(chalk)
+BuildRequires:      npm(grunt-lib-contrib)
+BuildRequires:      npm(grunt)
+BuildRequires:      npm(less)
 
-Requires:           nodejs-chalk
-Requires:           nodejs-grunt-lib-contrib
-Requires:           nodejs-grunt
-Requires:           nodejs-less
+Requires:           npm(chalk)
+Requires:           npm(grunt-lib-contrib)
+Requires:           npm(grunt)
+Requires:           npm(less)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-grunt-contrib-nodeunit
-BuildRequires:      nodejs-grunt-contrib-jshint
-BuildRequires:      nodejs-grunt
-BuildRequires:      nodejs-grunt-contrib-internal
-BuildRequires:      nodejs-grunt-contrib-clean
+BuildRequires:      npm(grunt-contrib-nodeunit)
+BuildRequires:      npm(grunt-contrib-jshint)
+BuildRequires:      npm(grunt)
+BuildRequires:      npm(grunt-contrib-internal)
+BuildRequires:      npm(grunt-contrib-clean)
 %endif
 
 
@@ -42,24 +45,12 @@ Compile LESS files to CSS.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep chalk
-%nodejs_fixdep grunt-lib-contrib
-%nodejs_fixdep grunt
-%nodejs_fixdep less
+%nodejs_fixdep chalk ~0.4.x
+%nodejs_fixdep grunt-lib-contrib ~0.6.x
+%nodejs_fixdep grunt ~0.4.x
+%nodejs_fixdep less ~1.x
 
-%if 0%{?enable_tests}
-%nodejs_fixdep --dev grunt-contrib-nodeunit
-%nodejs_fixdep --dev grunt-contrib-jshint
-%nodejs_fixdep --dev grunt
-%nodejs_fixdep --dev grunt-contrib-internal
-%nodejs_fixdep --dev grunt-contrib-clean
-%else
-%nodejs_fixdep --dev -r grunt-contrib-nodeunit
-%nodejs_fixdep --dev -r grunt-contrib-jshint
-%nodejs_fixdep --dev -r grunt
-%nodejs_fixdep --dev -r grunt-contrib-internal
-%nodejs_fixdep --dev -r grunt-contrib-clean
-%endif
+
 
 
 %build
@@ -85,5 +76,5 @@ grunt test
 %{nodejs_sitelib}/grunt-contrib-less/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.9.0-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.9.0-1
 - Initial packaging for Fedora.

@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 
 
 %global barename lodash.support
@@ -14,9 +17,9 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-lodash-isnative
+BuildRequires:      npm(lodash._isnative)
 
-Requires:           nodejs-lodash-isnative
+Requires:           npm(lodash._isnative)
 
 
 %description
@@ -28,7 +31,8 @@ The Lo-Dash object `_.support` as a Node.js module
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep lodash._isnative
+%nodejs_fixdep lodash._isnative ~2.4.x
+
 
 
 
@@ -50,5 +54,5 @@ cp -pr package.json index.js \
 %{nodejs_sitelib}/lodash.support/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 2.4.1-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 2.4.1-1
 - Initial packaging for Fedora.

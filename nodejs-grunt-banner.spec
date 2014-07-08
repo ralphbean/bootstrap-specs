@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename grunt-banner
@@ -14,16 +17,16 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-grunt
+BuildRequires:      npm(grunt)
 
-Requires:           nodejs-grunt
+Requires:           npm(grunt)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-grunt-contrib-clean
-BuildRequires:      nodejs-grunt
-BuildRequires:      nodejs-grunt-contrib-nodeunit
-BuildRequires:      nodejs-grunt-contrib-copy
-BuildRequires:      nodejs-grunt-contrib-jshint
+BuildRequires:      npm(grunt-contrib-clean)
+BuildRequires:      npm(grunt)
+BuildRequires:      npm(grunt-contrib-nodeunit)
+BuildRequires:      npm(grunt-contrib-copy)
+BuildRequires:      npm(grunt-contrib-jshint)
 %endif
 
 %description
@@ -35,21 +38,9 @@ Adds a simple banner to files
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep grunt
+%nodejs_fixdep grunt ~0.4.x
 
-%if 0%{?enable_tests}
-%nodejs_fixdep --dev grunt-contrib-clean
-%nodejs_fixdep --dev grunt
-%nodejs_fixdep --dev grunt-contrib-nodeunit
-%nodejs_fixdep --dev grunt-contrib-copy
-%nodejs_fixdep --dev grunt-contrib-jshint
-%else
-%nodejs_fixdep --dev -r grunt-contrib-clean
-%nodejs_fixdep --dev -r grunt
-%nodejs_fixdep --dev -r grunt-contrib-nodeunit
-%nodejs_fixdep --dev -r grunt-contrib-copy
-%nodejs_fixdep --dev -r grunt-contrib-jshint
-%endif
+
 
 
 %build
@@ -75,5 +66,5 @@ grunt test
 %{nodejs_sitelib}/grunt-banner/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.2.3-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.2.3-1
 - Initial packaging for Fedora.

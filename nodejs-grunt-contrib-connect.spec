@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename grunt-contrib-connect
@@ -14,26 +17,26 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-portscanner
-BuildRequires:      nodejs-connect
-BuildRequires:      nodejs-async
-BuildRequires:      nodejs-open
-BuildRequires:      nodejs-grunt
-BuildRequires:      nodejs-connect-livereload
+BuildRequires:      npm(portscanner)
+BuildRequires:      npm(connect)
+BuildRequires:      npm(async)
+BuildRequires:      npm(open)
+BuildRequires:      npm(grunt)
+BuildRequires:      npm(connect-livereload)
 
-Requires:           nodejs-portscanner
-Requires:           nodejs-connect
-Requires:           nodejs-async
-Requires:           nodejs-open
-Requires:           nodejs-grunt
-Requires:           nodejs-connect-livereload
+Requires:           npm(portscanner)
+Requires:           npm(connect)
+Requires:           npm(async)
+Requires:           npm(open)
+Requires:           npm(grunt)
+Requires:           npm(connect-livereload)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-grunt-contrib-nodeunit
-BuildRequires:      nodejs-grunt-contrib-jshint
-BuildRequires:      nodejs-grunt-cli
-BuildRequires:      nodejs-grunt
-BuildRequires:      nodejs-grunt-contrib-internal
+BuildRequires:      npm(grunt-contrib-nodeunit)
+BuildRequires:      npm(grunt-contrib-jshint)
+BuildRequires:      npm(grunt-cli)
+BuildRequires:      npm(grunt)
+BuildRequires:      npm(grunt-contrib-internal)
 %endif
 
 
@@ -47,25 +50,13 @@ Start a connect web server.
 rm -rf node_modules/
 
 %nodejs_fixdep portscanner
-%nodejs_fixdep connect
-%nodejs_fixdep async
-%nodejs_fixdep open
-%nodejs_fixdep grunt
-%nodejs_fixdep connect-livereload
+%nodejs_fixdep connect ~2.x
+%nodejs_fixdep async ~0.x
+%nodejs_fixdep open ~0.0.x
+%nodejs_fixdep grunt ~0.4.x
+%nodejs_fixdep connect-livereload ~0.4.x
 
-%if 0%{?enable_tests}
-%nodejs_fixdep --dev grunt-contrib-nodeunit
-%nodejs_fixdep --dev grunt-contrib-jshint
-%nodejs_fixdep --dev grunt-cli
-%nodejs_fixdep --dev grunt
-%nodejs_fixdep --dev grunt-contrib-internal
-%else
-%nodejs_fixdep --dev -r grunt-contrib-nodeunit
-%nodejs_fixdep --dev -r grunt-contrib-jshint
-%nodejs_fixdep --dev -r grunt-cli
-%nodejs_fixdep --dev -r grunt
-%nodejs_fixdep --dev -r grunt-contrib-internal
-%endif
+
 
 
 %build
@@ -91,5 +82,5 @@ grunt jshint test
 %{nodejs_sitelib}/grunt-contrib-connect/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.8.0-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.8.0-1
 - Initial packaging for Fedora.

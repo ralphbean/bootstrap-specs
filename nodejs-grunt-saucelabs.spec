@@ -1,9 +1,12 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename grunt-saucelabs
 
 Name:               nodejs-grunt-saucelabs
-Version:            8.1.0
+Version:            8.1.1
 Release:            1%{?dist}
 Summary:            Grunt task running tests using Sauce Labs
 
@@ -14,32 +17,32 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-saucelabs
-BuildRequires:      nodejs-q
-BuildRequires:      nodejs-colors
-BuildRequires:      nodejs-lodash
-BuildRequires:      nodejs-sauce-tunnel
-BuildRequires:      nodejs-grunt
-BuildRequires:      nodejs-request
+BuildRequires:      npm(saucelabs)
+BuildRequires:      npm(q)
+BuildRequires:      npm(colors)
+BuildRequires:      npm(lodash)
+BuildRequires:      npm(sauce-tunnel)
+BuildRequires:      npm(grunt)
+BuildRequires:      npm(request)
 
-Requires:           nodejs-saucelabs
-Requires:           nodejs-q
-Requires:           nodejs-colors
-Requires:           nodejs-lodash
-Requires:           nodejs-sauce-tunnel
-Requires:           nodejs-grunt
-Requires:           nodejs-request
+Requires:           npm(saucelabs)
+Requires:           npm(q)
+Requires:           npm(colors)
+Requires:           npm(lodash)
+Requires:           npm(sauce-tunnel)
+Requires:           npm(grunt)
+Requires:           npm(request)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-grunt-sauce-tunnel
-BuildRequires:      nodejs-grunt-contrib-watch
-BuildRequires:      nodejs-grunt-contrib-connect
-BuildRequires:      nodejs-grunt-contrib-jshint
-BuildRequires:      nodejs-grunt-jscs-checker
-BuildRequires:      nodejs-publish
-BuildRequires:      nodejs-merge
-BuildRequires:      nodejs-load-grunt-config
-BuildRequires:      nodejs-grunt
+BuildRequires:      npm(grunt-sauce-tunnel)
+BuildRequires:      npm(grunt-contrib-watch)
+BuildRequires:      npm(grunt-contrib-connect)
+BuildRequires:      npm(grunt-contrib-jshint)
+BuildRequires:      npm(grunt-jscs-checker)
+BuildRequires:      npm(publish)
+BuildRequires:      npm(merge)
+BuildRequires:      npm(load-grunt-config)
+BuildRequires:      npm(grunt)
 %endif
 
 
@@ -53,34 +56,25 @@ using Sauce Labs' Cloudified Browsers.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep saucelabs
+%nodejs_fixdep saucelabs ~0.1.x
 %nodejs_fixdep q
-%nodejs_fixdep colors
-%nodejs_fixdep lodash
-%nodejs_fixdep sauce-tunnel
-%nodejs_fixdep grunt
-%nodejs_fixdep request
+%nodejs_fixdep colors ~0.6.x
+%nodejs_fixdep lodash ~2.4.x
+%nodejs_fixdep sauce-tunnel ~2.0.x
+%nodejs_fixdep grunt ~0.4.x
+%nodejs_fixdep request ~2.x
+
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev grunt-sauce-tunnel
-%nodejs_fixdep --dev grunt-contrib-watch
-%nodejs_fixdep --dev grunt-contrib-connect
-%nodejs_fixdep --dev grunt-contrib-jshint
-%nodejs_fixdep --dev grunt-jscs-checker
-%nodejs_fixdep --dev publish
-%nodejs_fixdep --dev merge
-%nodejs_fixdep --dev load-grunt-config
-%nodejs_fixdep --dev grunt
+%nodejs_fixdep --dev grunt-sauce-tunnel ~^0.2.x
+%nodejs_fixdep --dev grunt-jscs-checker ~^0.4.x
+%nodejs_fixdep --dev merge ~^1.1.x
+%nodejs_fixdep --dev load-grunt-config ~^0.9.x
 %else
-%nodejs_fixdep --dev -r grunt-sauce-tunnel
-%nodejs_fixdep --dev -r grunt-contrib-watch
-%nodejs_fixdep --dev -r grunt-contrib-connect
-%nodejs_fixdep --dev -r grunt-contrib-jshint
-%nodejs_fixdep --dev -r grunt-jscs-checker
-%nodejs_fixdep --dev -r publish
-%nodejs_fixdep --dev -r merge
-%nodejs_fixdep --dev -r load-grunt-config
-%nodejs_fixdep --dev -r grunt
+%nodejs_fixdep --dev -r grunt-sauce-tunnel ~^0.2.x
+%nodejs_fixdep --dev -r grunt-jscs-checker ~^0.4.x
+%nodejs_fixdep --dev -r merge ~^1.1.x
+%nodejs_fixdep --dev -r load-grunt-config ~^0.9.x
 %endif
 
 
@@ -107,5 +101,5 @@ grunt
 %{nodejs_sitelib}/grunt-saucelabs/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 8.1.0-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 8.1.1-1
 - Initial packaging for Fedora.

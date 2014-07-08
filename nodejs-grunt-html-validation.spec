@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename grunt-html-validation
@@ -14,21 +17,21 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-colors
-BuildRequires:      nodejs-grunt
-BuildRequires:      nodejs-request
-BuildRequires:      nodejs-w3cjs
+BuildRequires:      npm(colors)
+BuildRequires:      npm(grunt)
+BuildRequires:      npm(request)
+BuildRequires:      npm(w3cjs)
 
-Requires:           nodejs-colors
-Requires:           nodejs-grunt
-Requires:           nodejs-request
-Requires:           nodejs-w3cjs
+Requires:           npm(colors)
+Requires:           npm(grunt)
+Requires:           npm(request)
+Requires:           npm(w3cjs)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-grunt-contrib-nodeunit
-BuildRequires:      nodejs-grunt-contrib-jshint
-BuildRequires:      nodejs-grunt
-BuildRequires:      nodejs-grunt-contrib-clean
+BuildRequires:      npm(grunt-contrib-nodeunit)
+BuildRequires:      npm(grunt-contrib-jshint)
+BuildRequires:      npm(grunt)
+BuildRequires:      npm(grunt-contrib-clean)
 %endif
 
 
@@ -42,23 +45,10 @@ automatically.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep colors
-%nodejs_fixdep grunt
-%nodejs_fixdep request
-%nodejs_fixdep w3cjs
-
-%if 0%{?enable_tests}
-%nodejs_fixdep --dev grunt-contrib-nodeunit
-%nodejs_fixdep --dev grunt-contrib-jshint
-%nodejs_fixdep --dev grunt
-%nodejs_fixdep --dev grunt-contrib-clean
-%else
-%nodejs_fixdep --dev -r grunt-contrib-nodeunit
-%nodejs_fixdep --dev -r grunt-contrib-jshint
-%nodejs_fixdep --dev -r grunt
-%nodejs_fixdep --dev -r grunt-contrib-clean
-%endif
-
+%nodejs_fixdep colors ~0.6.x
+%nodejs_fixdep grunt ~0.4.x
+%nodejs_fixdep request ~2.x
+%nodejs_fixdep w3cjs ~0.1.x
 
 %build
 %nodejs_symlink_deps --build
@@ -83,5 +73,5 @@ grunt test
 %{nodejs_sitelib}/grunt-html-validation/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.1.6-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.1.6-1
 - Initial packaging for Fedora.

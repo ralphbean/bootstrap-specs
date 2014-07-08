@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename sauce-tunnel
@@ -14,11 +17,11 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-chalk
-BuildRequires:      nodejs-request
+BuildRequires:      npm(chalk)
+BuildRequires:      npm(request)
 
-Requires:           nodejs-chalk
-Requires:           nodejs-request
+Requires:           npm(chalk)
+Requires:           npm(request)
 
 %if 0%{?enable_tests}
 %endif
@@ -33,8 +36,9 @@ A Node.js wrapper around the Saucelabs tunnel jar.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep chalk
-%nodejs_fixdep request
+%nodejs_fixdep chalk ~0.4.x
+%nodejs_fixdep request ~2.x
+
 
 %if 0%{?enable_tests}
 %else
@@ -64,5 +68,5 @@ node ./test/sanity
 %{nodejs_sitelib}/sauce-tunnel/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 2.0.6-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 2.0.6-1
 - Initial packaging for Fedora.

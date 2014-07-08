@@ -1,9 +1,12 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 
 
 %global barename caniuse-db
 
 Name:               nodejs-caniuse-db
-Version:            1.0.20140628
+Version:            1.0.20140702
 Release:            1%{?dist}
 Summary:            Raw browser/feature support data from caniuse.com
 
@@ -48,5 +51,5 @@ cp -pr package.json \
 %{nodejs_sitelib}/caniuse-db/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 1.0.20140628-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 1.0.20140702-1
 - Initial packaging for Fedora.

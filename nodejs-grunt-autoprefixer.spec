@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename grunt-autoprefixer
@@ -14,24 +17,24 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-chalk
-BuildRequires:      nodejs-diff
-BuildRequires:      nodejs-grunt
-BuildRequires:      nodejs-autoprefixer
+BuildRequires:      npm(chalk)
+BuildRequires:      npm(diff)
+BuildRequires:      npm(grunt)
+BuildRequires:      npm(autoprefixer)
 
-Requires:           nodejs-chalk
-Requires:           nodejs-diff
-Requires:           nodejs-grunt
-Requires:           nodejs-autoprefixer
+Requires:           npm(chalk)
+Requires:           npm(diff)
+Requires:           npm(grunt)
+Requires:           npm(autoprefixer)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-time-grunt
-BuildRequires:      nodejs-load-grunt-tasks
-BuildRequires:      nodejs-grunt-contrib-nodeunit
-BuildRequires:      nodejs-grunt-contrib-clean
-BuildRequires:      nodejs-grunt-contrib-jshint
-BuildRequires:      nodejs-grunt
-BuildRequires:      nodejs-grunt-contrib-copy
+BuildRequires:      npm(time-grunt)
+BuildRequires:      npm(load-grunt-tasks)
+BuildRequires:      npm(grunt-contrib-nodeunit)
+BuildRequires:      npm(grunt-contrib-clean)
+BuildRequires:      npm(grunt-contrib-jshint)
+BuildRequires:      npm(grunt)
+BuildRequires:      npm(grunt-contrib-copy)
 %endif
 
 
@@ -45,28 +48,12 @@ Use database.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep chalk
-%nodejs_fixdep diff
-%nodejs_fixdep grunt
-%nodejs_fixdep autoprefixer
+%nodejs_fixdep chalk ~0.4.x
+%nodejs_fixdep diff ~1.0.x
+%nodejs_fixdep grunt ~0.4.x
+%nodejs_fixdep autoprefixer ~2.1.x
 
-%if 0%{?enable_tests}
-%nodejs_fixdep --dev time-grunt
-%nodejs_fixdep --dev load-grunt-tasks
-%nodejs_fixdep --dev grunt-contrib-nodeunit
-%nodejs_fixdep --dev grunt-contrib-clean
-%nodejs_fixdep --dev grunt-contrib-jshint
-%nodejs_fixdep --dev grunt
-%nodejs_fixdep --dev grunt-contrib-copy
-%else
-%nodejs_fixdep --dev -r time-grunt
-%nodejs_fixdep --dev -r load-grunt-tasks
-%nodejs_fixdep --dev -r grunt-contrib-nodeunit
-%nodejs_fixdep --dev -r grunt-contrib-clean
-%nodejs_fixdep --dev -r grunt-contrib-jshint
-%nodejs_fixdep --dev -r grunt
-%nodejs_fixdep --dev -r grunt-contrib-copy
-%endif
+
 
 
 %build
@@ -92,5 +79,5 @@ grunt test
 %{nodejs_sitelib}/grunt-autoprefixer/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.8.1-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.8.1-1
 - Initial packaging for Fedora.

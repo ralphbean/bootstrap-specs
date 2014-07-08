@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename saucelabs
@@ -17,10 +20,10 @@ BuildRequires:      nodejs-packaging >= 6
 
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-mocha
-BuildRequires:      nodejs-chai
-BuildRequires:      nodejs-jshint
-BuildRequires:      nodejs-nock
+BuildRequires:      npm(mocha)
+BuildRequires:      npm(chai)
+BuildRequires:      npm(jshint)
+BuildRequires:      npm(nock)
 %endif
 
 
@@ -35,16 +38,17 @@ node-saucelabs
 rm -rf node_modules/
 
 
+
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev mocha
-%nodejs_fixdep --dev chai
-%nodejs_fixdep --dev jshint
-%nodejs_fixdep --dev nock
+%nodejs_fixdep --dev mocha ~1.9.x
+%nodejs_fixdep --dev chai ~1.5.x
+%nodejs_fixdep --dev jshint ~*
+%nodejs_fixdep --dev nock ~0.17.x
 %else
-%nodejs_fixdep --dev -r mocha
-%nodejs_fixdep --dev -r chai
-%nodejs_fixdep --dev -r jshint
-%nodejs_fixdep --dev -r nock
+%nodejs_fixdep --dev -r mocha ~1.9.x
+%nodejs_fixdep --dev -r chai ~1.5.x
+%nodejs_fixdep --dev -r jshint ~*
+%nodejs_fixdep --dev -r nock ~0.17.x
 %endif
 
 
@@ -71,5 +75,5 @@ make lint test
 %{nodejs_sitelib}/saucelabs/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.1.1-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.1.1-1
 - Initial packaging for Fedora.

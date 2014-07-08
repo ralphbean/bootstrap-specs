@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename vow
@@ -40,26 +43,27 @@ A Promises/A+ implementation.
 rm -rf node_modules/
 
 
+
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev uglify-js
-%nodejs_fixdep --dev jspath
-%nodejs_fixdep --dev istanbul
-%nodejs_fixdep --dev promises-aplus-tests
-%nodejs_fixdep --dev marked
-%nodejs_fixdep --dev highlight.js
-%nodejs_fixdep --dev nodeunit
-%nodejs_fixdep --dev bem-jsd
-%nodejs_fixdep --dev yate
+%nodejs_fixdep --dev uglify-js ~1.3.x
+%nodejs_fixdep --dev jspath ~0.2.x
+%nodejs_fixdep --dev istanbul ~
+%nodejs_fixdep --dev promises-aplus-tests ~2.0.x
+%nodejs_fixdep --dev marked ~0.2.x
+%nodejs_fixdep --dev highlight.js ~7.5.x
+%nodejs_fixdep --dev nodeunit ~
+%nodejs_fixdep --dev bem-jsd ~1.3.x
+%nodejs_fixdep --dev yate ~0.0.x
 %else
-%nodejs_fixdep --dev -r uglify-js
-%nodejs_fixdep --dev -r jspath
-%nodejs_fixdep --dev -r istanbul
-%nodejs_fixdep --dev -r promises-aplus-tests
-%nodejs_fixdep --dev -r marked
-%nodejs_fixdep --dev -r highlight.js
-%nodejs_fixdep --dev -r nodeunit
-%nodejs_fixdep --dev -r bem-jsd
-%nodejs_fixdep --dev -r yate
+%nodejs_fixdep --dev -r uglify-js ~1.3.x
+%nodejs_fixdep --dev -r jspath ~0.2.x
+%nodejs_fixdep --dev -r istanbul ~
+%nodejs_fixdep --dev -r promises-aplus-tests ~2.0.x
+%nodejs_fixdep --dev -r marked ~0.2.x
+%nodejs_fixdep --dev -r highlight.js ~7.5.x
+%nodejs_fixdep --dev -r nodeunit ~
+%nodejs_fixdep --dev -r bem-jsd ~1.3.x
+%nodejs_fixdep --dev -r yate ~0.0.x
 %endif
 
 
@@ -86,5 +90,5 @@ cp -pr package.json lib vow.min.js \
 %{nodejs_sitelib}/vow/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.4.4-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.4.4-1
 - Initial packaging for Fedora.

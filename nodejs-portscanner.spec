@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 
 
 %global barename portscanner
@@ -14,9 +17,9 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-async
+BuildRequires:      npm(async)
 
-Requires:           nodejs-async
+Requires:           npm(async)
 
 
 %description
@@ -28,7 +31,7 @@ The portscanner module is an asynchronous JavaScript port scanner for Node.js.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep async
+%nodejs_fixdep async ~0.x
 
 
 %build
@@ -41,10 +44,12 @@ cp -pr package.json lib \
 
 %nodejs_symlink_deps
 
+
+
 %files
 %doc LICENSE README.md
 %{nodejs_sitelib}/portscanner/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 1.0.0-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 1.0.0-1
 - Initial packaging for Fedora.

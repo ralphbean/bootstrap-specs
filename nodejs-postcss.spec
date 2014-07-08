@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename postcss
@@ -14,19 +17,19 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-source-map
-BuildRequires:      nodejs-base64-js
+BuildRequires:      npm(source-map)
+BuildRequires:      npm(base64-js)
 
-Requires:           nodejs-source-map
-Requires:           nodejs-base64-js
+Requires:           npm(source-map)
+Requires:           npm(base64-js)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-cssom
-BuildRequires:      nodejs-fs-extra
-BuildRequires:      nodejs-gonzales
-BuildRequires:      nodejs-rework
-BuildRequires:      nodejs-should
-BuildRequires:      nodejs-mocha
+BuildRequires:      npm(cssom)
+BuildRequires:      npm(fs-extra)
+BuildRequires:      npm(gonzales)
+BuildRequires:      npm(rework)
+BuildRequires:      npm(should)
+BuildRequires:      npm(mocha)
 %endif
 
 
@@ -40,23 +43,24 @@ with full source map support.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep source-map
-%nodejs_fixdep base64-js
+%nodejs_fixdep source-map ~0.1.x
+%nodejs_fixdep base64-js ~0.0.x
+
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev cssom
-%nodejs_fixdep --dev fs-extra
-%nodejs_fixdep --dev gonzales
-%nodejs_fixdep --dev rework
-%nodejs_fixdep --dev should
-%nodejs_fixdep --dev mocha
+%nodejs_fixdep --dev cssom ~0.3.x
+%nodejs_fixdep --dev fs-extra ~0.9.x
+%nodejs_fixdep --dev gonzales ~1.0.x
+%nodejs_fixdep --dev rework ~1.0.x
+%nodejs_fixdep --dev should ~4.0.x
+%nodejs_fixdep --dev mocha ~1.20.x
 %else
-%nodejs_fixdep --dev -r cssom
-%nodejs_fixdep --dev -r fs-extra
-%nodejs_fixdep --dev -r gonzales
-%nodejs_fixdep --dev -r rework
-%nodejs_fixdep --dev -r should
-%nodejs_fixdep --dev -r mocha
+%nodejs_fixdep --dev -r cssom ~0.3.x
+%nodejs_fixdep --dev -r fs-extra ~0.9.x
+%nodejs_fixdep --dev -r gonzales ~1.0.x
+%nodejs_fixdep --dev -r rework ~1.0.x
+%nodejs_fixdep --dev -r should ~4.0.x
+%nodejs_fixdep --dev -r mocha ~1.20.x
 %endif
 
 
@@ -83,5 +87,5 @@ mocha
 %{nodejs_sitelib}/postcss/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 1.0.0-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 1.0.0-1
 - Initial packaging for Fedora.

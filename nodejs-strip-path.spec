@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename strip-path
@@ -17,7 +20,7 @@ BuildRequires:      nodejs-packaging >= 6
 
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-mocha
+BuildRequires:      npm(mocha)
 %endif
 
 
@@ -31,10 +34,11 @@ Strip a path from a path
 rm -rf node_modules/
 
 
+
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev mocha
+%nodejs_fixdep --dev mocha ~*
 %else
-%nodejs_fixdep --dev -r mocha
+%nodejs_fixdep --dev -r mocha ~*
 %endif
 
 
@@ -61,5 +65,5 @@ mocha
 %{nodejs_sitelib}/strip-path/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.1.1-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.1.1-1
 - Initial packaging for Fedora.

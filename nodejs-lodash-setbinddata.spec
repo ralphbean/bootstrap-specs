@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 
 
 %global barename lodash._setbinddata
@@ -14,11 +17,11 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-lodash-noop
-BuildRequires:      nodejs-lodash-isnative
+BuildRequires:      npm(lodash.noop)
+BuildRequires:      npm(lodash._isnative)
 
-Requires:           nodejs-lodash-noop
-Requires:           nodejs-lodash-isnative
+Requires:           npm(lodash.noop)
+Requires:           npm(lodash._isnative)
 
 
 %description
@@ -31,8 +34,9 @@ by lodash-cli.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep lodash.noop
-%nodejs_fixdep lodash._isnative
+%nodejs_fixdep lodash.noop ~2.4.x
+%nodejs_fixdep lodash._isnative ~2.4.x
+
 
 
 
@@ -54,5 +58,5 @@ cp -pr package.json index.js \
 %{nodejs_sitelib}/lodash._setbinddata/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 2.4.1-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 2.4.1-1
 - Initial packaging for Fedora.

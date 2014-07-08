@@ -1,9 +1,12 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename clean-css
 
 Name:               nodejs-clean-css
-Version:            2.2.5
+Version:            2.2.6
 Release:            1%{?dist}
 Summary:            A well-tested CSS minifier
 
@@ -14,16 +17,16 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-commander
+BuildRequires:      npm(commander)
 
-Requires:           nodejs-commander
+Requires:           npm(commander)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-browserify
-BuildRequires:      nodejs-nock
-BuildRequires:      nodejs-jshint
-BuildRequires:      nodejs-uglify-js
-BuildRequires:      nodejs-vows
+BuildRequires:      npm(browserify)
+BuildRequires:      npm(nock)
+BuildRequires:      npm(jshint)
+BuildRequires:      npm(uglify-js)
+BuildRequires:      npm(vows)
 %endif
 
 
@@ -37,20 +40,21 @@ minifying CSS files.
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep commander
+%nodejs_fixdep commander ~2.2.x
+
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev browserify
-%nodejs_fixdep --dev nock
-%nodejs_fixdep --dev jshint
-%nodejs_fixdep --dev uglify-js
-%nodejs_fixdep --dev vows
+%nodejs_fixdep --dev browserify ~4.x
+%nodejs_fixdep --dev nock ~0.28.x
+%nodejs_fixdep --dev jshint ~2.5.x
+%nodejs_fixdep --dev uglify-js ~2.4.x
+%nodejs_fixdep --dev vows ~0.7.x
 %else
-%nodejs_fixdep --dev -r browserify
-%nodejs_fixdep --dev -r nock
-%nodejs_fixdep --dev -r jshint
-%nodejs_fixdep --dev -r uglify-js
-%nodejs_fixdep --dev -r vows
+%nodejs_fixdep --dev -r browserify ~4.x
+%nodejs_fixdep --dev -r nock ~0.28.x
+%nodejs_fixdep --dev -r jshint ~2.5.x
+%nodejs_fixdep --dev -r uglify-js ~2.4.x
+%nodejs_fixdep --dev -r vows ~0.7.x
 %endif
 
 
@@ -77,5 +81,5 @@ vows
 %{nodejs_sitelib}/clean-css/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 2.2.5-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 2.2.6-1
 - Initial packaging for Fedora.

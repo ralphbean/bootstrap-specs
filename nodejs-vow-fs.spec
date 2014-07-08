@@ -1,3 +1,6 @@
+# This macro is needed at the start for building on EL6
+%{?nodejs_find_provides_and_requires}
+
 %global enable_tests 0
 
 %global barename vow-fs
@@ -15,19 +18,19 @@ Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{versio
 
 BuildRequires:      nodejs-packaging >= 6
 
-BuildRequires:      nodejs-node-uuid
-BuildRequires:      nodejs-glob
-BuildRequires:      nodejs-vow
-BuildRequires:      nodejs-vow-queue
+BuildRequires:      npm(node-uuid)
+BuildRequires:      npm(glob)
+BuildRequires:      npm(vow)
+BuildRequires:      npm(vow-queue)
 
-Requires:           nodejs-node-uuid
-Requires:           nodejs-glob
-Requires:           nodejs-vow
-Requires:           nodejs-vow-queue
+Requires:           npm(node-uuid)
+Requires:           npm(glob)
+Requires:           npm(vow)
+Requires:           npm(vow-queue)
 
 %if 0%{?enable_tests}
-BuildRequires:      nodejs-nodeunit
-BuildRequires:      nodejs-istanbul
+BuildRequires:      npm(nodeunit)
+BuildRequires:      npm(istanbul)
 %endif
 
 
@@ -40,17 +43,18 @@ BuildRequires:      nodejs-istanbul
 # Remove bundled node_modules if there are any..
 rm -rf node_modules/
 
-%nodejs_fixdep node-uuid
-%nodejs_fixdep glob
-%nodejs_fixdep vow
-%nodejs_fixdep vow-queue
+%nodejs_fixdep node-uuid ~1.4.x
+%nodejs_fixdep glob ~3.2.x
+%nodejs_fixdep vow ~0.4.x
+%nodejs_fixdep vow-queue ~0.3.x
+
 
 %if 0%{?enable_tests}
-%nodejs_fixdep --dev nodeunit
-%nodejs_fixdep --dev istanbul
+%nodejs_fixdep --dev nodeunit ~
+%nodejs_fixdep --dev istanbul ~
 %else
-%nodejs_fixdep --dev -r nodeunit
-%nodejs_fixdep --dev -r istanbul
+%nodejs_fixdep --dev -r nodeunit ~
+%nodejs_fixdep --dev -r istanbul ~
 %endif
 
 
@@ -77,5 +81,5 @@ cp -pr package.json lib \
 %{nodejs_sitelib}/vow-fs/
 
 %changelog
-* Wed Jul 02 2014 Ralph Bean <rbean@redhat.com> - 0.3.2-1
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.3.2-1
 - Initial packaging for Fedora.
