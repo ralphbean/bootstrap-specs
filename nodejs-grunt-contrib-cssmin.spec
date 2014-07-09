@@ -48,10 +48,6 @@ rm -rf node_modules/
 %nodejs_fixdep --caret
 %nodejs_fixdep maxmin ~0.x
 
-%if 0%{?enable_tests}
-%nodejs_fixdep --caret --dev
-%endif
-
 %build
 %nodejs_symlink_deps --build
 

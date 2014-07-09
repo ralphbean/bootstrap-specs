@@ -61,10 +61,6 @@ rm -rf node_modules/
 %nodejs_fixdep minimatch ^0.2
 %nodejs_fixdep esprima ^1.1
 
-%if 0%{?enable_tests}
-%nodejs_fixdep --caret --dev
-%endif
-
 %build
 %nodejs_symlink_deps --build
 

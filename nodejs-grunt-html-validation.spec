@@ -49,10 +49,6 @@ rm -rf node_modules/
 %nodejs_fixdep request ~2.x
 %nodejs_fixdep w3cjs ~0.1.x
 
-%if 0%{?enable_tests}
-%nodejs_fixdep --caret --dev
-%endif
-
 %build
 %nodejs_symlink_deps --build
 
