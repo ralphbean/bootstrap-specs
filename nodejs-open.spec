@@ -7,17 +7,22 @@
 
 Name:               nodejs-open
 Version:            0.0.5
-Release:            1%{?dist}
+Release:            2%{?dist}
 Summary:            Open a file or url in the user's preferred application
 
 Group:              Development/Libraries
 License:            MIT
 URL:                https://www.npmjs.org/package/open
 Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{version}.tgz
+BuildArch:          noarch
+
+%if 0%{?fedora} >= 19
+ExclusiveArch:      %{nodejs_arches} noarch
+%else
+ExclusiveArch:      %{ix86} x86_64 %{arm} noarch
+%endif
 
 BuildRequires:      nodejs-packaging >= 6
-
-
 
 %if 0%{?enable_tests}
 BuildRequires:      npm(mocha)
@@ -45,18 +50,19 @@ cp -pr package.json lib \
 
 %nodejs_symlink_deps
 
-
 %check
 %if 0%{?enable_tests}
 %nodejs_symlink_deps --check
 node_modules/mocha/bin/mocha
 %endif
 
-
 %files
 %doc README.md LICENSE
 %{nodejs_sitelib}/open/
 
 %changelog
+* Mon Jul 21 2014 Ralph Bean <rbean@redhat.com> - 0.0.5-2
+- Specify noarch.
+
 * Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.0.5-1
 - Initial packaging for Fedora.

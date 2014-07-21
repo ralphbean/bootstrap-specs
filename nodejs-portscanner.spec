@@ -7,13 +7,21 @@
 
 Name:               nodejs-portscanner
 Version:            1.0.0
-Release:            1%{?dist}
+Release:            2%{?dist}
 Summary:            Asynchronous port scanner for Node.js
 
 Group:              Development/Libraries
 License:            MIT
 URL:                https://www.npmjs.org/package/portscanner
 Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{version}.tgz
+BuildArch:          noarch
+
+%if 0%{?fedora} >= 19
+ExclusiveArch:      %{nodejs_arches} noarch
+%else
+ExclusiveArch:      %{ix86} x86_64 %{arm} noarch
+%endif
+
 
 BuildRequires:      nodejs-packaging >= 6
 
@@ -44,12 +52,13 @@ cp -pr package.json lib \
 
 %nodejs_symlink_deps
 
-
-
 %files
 %doc LICENSE README.md
 %{nodejs_sitelib}/portscanner/
 
 %changelog
+* Mon Jul 21 2014 Ralph Bean <rbean@redhat.com> - 1.0.0-2
+- Specify noarch.
+
 * Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 1.0.0-1
 - Initial packaging for Fedora.

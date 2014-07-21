@@ -7,7 +7,7 @@
 
 Name:               nodejs-strip-path
 Version:            0.1.1
-Release:            1%{?dist}
+Release:            2%{?dist}
 Summary:            Strip a path from a path
 
 Group:              Development/Libraries
@@ -54,9 +54,15 @@ mocha
 
 
 %files
-%doc
+# No license file:  https://github.com/sindresorhus/strip-path/issues/1
+%doc readme.md
 %{nodejs_sitelib}/strip-path/
 
 %changelog
+* Mon Jul 21 2014 Ralph Bean <rbean@redhat.com> - 0.1.1-2
+- Clarified arch
+- Included readme file.
+- Filed bug requesting license file.
+
 * Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.1.1-1
 - Initial packaging for Fedora.

@@ -7,13 +7,21 @@
 
 Name:               nodejs-grunt-contrib-csslint
 Version:            0.2.0
-Release:            1%{?dist}
+Release:            2%{?dist}
 Summary:            Lint CSS files
 
 Group:              Development/Libraries
 License:            MIT
 URL:                https://www.npmjs.org/package/grunt-contrib-csslint
 Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{version}.tgz
+BuildArch:          noarch
+
+%if 0%{?fedora} >= 19
+ExclusiveArch:      %{nodejs_arches} noarch
+%else
+ExclusiveArch:      %{ix86} x86_64 %{arm} noarch
+%endif
+
 
 BuildRequires:      nodejs-packaging >= 6
 
@@ -67,5 +75,8 @@ grunt test --force
 %{nodejs_sitelib}/grunt-contrib-csslint/
 
 %changelog
+* Mon Jul 21 2014 Ralph Bean <rbean@redhat.com> - 0.2.0-2
+- Specified noarch.
+
 * Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.2.0-1
 - Initial packaging for Fedora.

@@ -7,7 +7,7 @@
 
 Name:               nodejs-vow-fs
 Version:            0.3.2
-Release:            1%{?dist}
+Release:            2%{?dist}
 Summary:            File I/O by Vow
 
 Group:              Development/Libraries
@@ -15,6 +15,13 @@ Group:              Development/Libraries
 License:            MIT and GPLv3
 URL:                https://www.npmjs.org/package/vow-fs
 Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{version}.tgz
+BuildArch:          noarch
+
+%if 0%{?fedora} >= 19
+ExclusiveArch:      %{nodejs_arches} noarch
+%else
+ExclusiveArch:      %{ix86} x86_64 %{arm} noarch
+%endif
 
 BuildRequires:      nodejs-packaging >= 6
 
@@ -69,5 +76,8 @@ cp -pr package.json lib \
 %{nodejs_sitelib}/vow-fs/
 
 %changelog
+* Mon Jul 21 2014 Ralph Bean <rbean@redhat.com> - 0.3.2-2
+- Specified noarch.
+
 * Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.3.2-1
 - Initial packaging for Fedora.

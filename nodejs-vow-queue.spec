@@ -7,13 +7,20 @@
 
 Name:               nodejs-vow-queue
 Version:            0.3.1
-Release:            1%{?dist}
+Release:            2%{?dist}
 Summary:            Vow-based task queue
 
 Group:              Development/Libraries
-License:            MIT
+License:            MIT and GPLv3+
 URL:                https://www.npmjs.org/package/vow-queue
 Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{version}.tgz
+BuildArch:          noarch
+
+%if 0%{?fedora} >= 19
+ExclusiveArch:      %{nodejs_arches} noarch
+%else
+ExclusiveArch:      %{ix86} x86_64 %{arm} noarch
+%endif
 
 BuildRequires:      nodejs-packaging >= 6
 
@@ -66,5 +73,9 @@ make validate
 %{nodejs_sitelib}/vow-queue/
 
 %changelog
+* Mon Jul 21 2014 Ralph Bean <rbean@redhat.com> - 0.3.1-2
+- Completed license field.
+- Specified noarch.
+
 * Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.3.1-1
 - Initial packaging for Fedora.

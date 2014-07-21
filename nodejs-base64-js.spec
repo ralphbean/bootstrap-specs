@@ -7,17 +7,23 @@
 
 Name:               nodejs-base64-js
 Version:            0.0.7
-Release:            1%{?dist}
+Release:            2%{?dist}
 Summary:            Base64 encoding/decoding in pure JS
 
 Group:              Development/Libraries
 License:            MIT
 URL:                https://www.npmjs.org/package/base64-js
 Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{version}.tgz
+BuildArch:          noarch
+
+%if 0%{?fedora} >= 19
+ExclusiveArch:      %{nodejs_arches} noarch
+%else
+ExclusiveArch:      %{ix86} x86_64 %{arm} noarch
+%endif
+
 
 BuildRequires:      nodejs-packaging >= 6
-
-
 
 %if 0%{?enable_tests}
 BuildRequires:      npm(tape)
@@ -25,8 +31,11 @@ BuildRequires:      npm(tape)
 
 
 %description
-base64-js
-=========
+base64-js does basic base64 encoding/decoding in pure JS.
+
+Many browsers already have base64 encoding/decoding functionality, but it is
+for text data, not all-purpose binary data.  Sometimes encoding/decoding binary
+data in the browser is useful, and that is what this module does.
 
 %prep
 %setup -q -n package
@@ -55,9 +64,14 @@ tape test/*.js
 
 
 %files
-%doc README.md
+%doc README.md LICENSE.MIT
 %{nodejs_sitelib}/base64-js/
 
 %changelog
+* Mon Jul 21 2014 Ralph Bean <rbean@redhat.com> - 0.0.7.2
+- Include license file.
+- Provide a description.
+- Specify noarch.
+
 * Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.0.7-1
 - Initial packaging for Fedora.

@@ -7,17 +7,22 @@
 
 Name:               nodejs-gonzales-pe
 Version:            3.0.0
-Release:            0.1.%{prerelease}%{?dist}
+Release:            0.2.%{prerelease}%{?dist}
 Summary:            Gonzales Preprocessor Edition (fast CSS parser)
 
 Group:              Development/Libraries
 License:            MIT
 URL:                https://www.npmjs.org/package/gonzales-pe
 Source0:            http://registry.npmjs.org/gonzales-pe/-/gonzales-pe-3.0.0-%{prerelease}.tgz
+BuildArch:          noarch
+
+%if 0%{?fedora} >= 19
+ExclusiveArch:      %{nodejs_arches} noarch
+%else
+ExclusiveArch:      %{ix86} x86_64 %{arm} noarch
+%endif
 
 BuildRequires:      nodejs-packaging >= 6
-
-
 
 %if 0%{?enable_tests}
 BuildRequires:      npm(coffee-script)
@@ -28,8 +33,8 @@ BuildRequires:      npm(mocha)
 
 
 %description
-Gonzales is a fast CSS parser.    
-Gonzales PE is a rework with support of preprocessors.    
+Gonzales is a fast CSS parser.
+Gonzales PE is a rework with support of preprocessors.
 
 %prep
 %setup -q -n package
@@ -58,10 +63,13 @@ cp -pr package.json lib \
 
 
 %files
-%doc CHANGELOG.md README.md
+%doc CHANGELOG.md README.md MIT-LICENSE.txt doc/
 %{nodejs_sitelib}/gonzales-pe/
 
 %changelog
+* Mon Jul 21 2014 Ralph Bean <rbean@redhat.com> - 3.0.0-0.2.9
+- Specified noarch as per review.
+
 * Wed Jul 16 2014 Ralph Bean <rbean@redhat.com> - 3.0.0-0.1.9
 - Latest upstream.
 - Fixed nodejs_fixdep statements.

@@ -6,7 +6,7 @@
 %global barename vow
 
 Name:               nodejs-vow
-Version:            0.4.4
+Version:            0.4.5
 Release:            1%{?dist}
 Summary:            Promises/A+ proposal compatible promises library
 
@@ -15,10 +15,15 @@ Group:              Development/Libraries
 License:            MIT and GPLv3
 URL:                https://www.npmjs.org/package/vow
 Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{version}.tgz
+BuildArch:          noarch
+
+%if 0%{?fedora} >= 19
+ExclusiveArch:      %{nodejs_arches} noarch
+%else
+ExclusiveArch:      %{ix86} x86_64 %{arm} noarch
+%endif
 
 BuildRequires:      nodejs-packaging >= 6
-
-
 
 %if 0%{?enable_tests}
 BuildRequires:      nodejs-uglify-js
@@ -54,18 +59,19 @@ cp -pr package.json lib vow.min.js \
 
 %nodejs_symlink_deps
 
-
 %check
 %if 0%{?enable_tests}
 %nodejs_symlink_deps --check
 ./node_modules/istanbul/lib/cli.js test test/utils/runner.js
 %endif
 
-
 %files
-%doc
 %{nodejs_sitelib}/vow/
 
 %changelog
+* Mon Jul 21 2014 Ralph Bean <rbean@redhat.com> - 0.4.5-1
+- Latest upstream.
+- Specify arch.
+
 * Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.4.4-1
 - Initial packaging for Fedora.

@@ -6,7 +6,7 @@
 %global barename clean-css
 
 Name:               nodejs-clean-css
-Version:            2.2.6
+Version:            2.2.8
 Release:            1%{?dist}
 Summary:            A well-tested CSS minifier
 
@@ -14,6 +14,13 @@ Group:              Development/Libraries
 License:            MIT
 URL:                https://www.npmjs.org/package/clean-css
 Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{version}.tgz
+BuildArch:          noarch
+
+%if 0%{?fedora} >= 19
+ExclusiveArch:      %{nodejs_arches} noarch
+%else
+ExclusiveArch:      %{ix86} x86_64 %{arm} noarch
+%endif
 
 BuildRequires:      nodejs-packaging >= 6
 
@@ -52,18 +59,20 @@ cp -pr package.json lib index.js \
 
 %nodejs_symlink_deps
 
-
 %check
 %if 0%{?enable_tests}
 %nodejs_symlink_deps --check
 vows
 %endif
 
-
 %files
 %doc README.md LICENSE
 %{nodejs_sitelib}/clean-css/
 
 %changelog
+* Mon Jul 21 2014 Ralph Bean <rbean@redhat.com> - 2.2.8-1
+- Latest upstream.
+- Specify noarch.
+
 * Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 2.2.6-1
 - Initial packaging for Fedora.

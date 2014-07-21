@@ -7,13 +7,21 @@
 
 Name:               nodejs-grunt-contrib-copy
 Version:            0.5.0
-Release:            1%{?dist}
+Release:            2%{?dist}
 Summary:            Copy files and folders
 
 Group:              Development/Libraries
 License:            MIT
 URL:                https://www.npmjs.org/package/grunt-contrib-copy
 Source0:            http://registry.npmjs.org/%{barename}/-/%{barename}-%{version}.tgz
+BuildArch:          noarch
+
+%if 0%{?fedora} >= 19
+ExclusiveArch:      %{nodejs_arches} noarch
+%else
+ExclusiveArch:      %{ix86} x86_64 %{arm} noarch
+%endif
+
 
 BuildRequires:      nodejs-packaging >= 6
 
@@ -64,5 +72,8 @@ grunt test
 %{nodejs_sitelib}/grunt-contrib-copy/
 
 %changelog
+* Mon Jul 21 2014 Ralph Bean <rbean@redhat.com> - 0.5.0-2
+- Specify noarch.
+
 * Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 0.5.0-1
 - Initial packaging for Fedora.
