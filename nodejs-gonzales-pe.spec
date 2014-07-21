@@ -62,5 +62,9 @@ cp -pr package.json lib \
 %{nodejs_sitelib}/gonzales-pe/
 
 %changelog
-* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 3.0.0-0.1.9
+* Wed Jul 16 2014 Ralph Bean <rbean@redhat.com> - 3.0.0-0.1.9
+- Latest upstream.
+- Fixed nodejs_fixdep statements.
+
+* Tue Jul 08 2014 Ralph Bean <rbean@redhat.com> - 3.0.0-0.1.6
 - Initial packaging for Fedora.
